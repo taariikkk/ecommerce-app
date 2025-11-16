@@ -37,3 +37,17 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ message: 'Greška pri brisanju proizvoda', error});
   }
 };
+
+export const updateProduct = async (req, res) => {
+  try{
+    const product = await Product.findByPk(req.params.id);
+    if(!product){
+      res.status(404).json({ message: 'Proizvod nije pronađen' });
+    }
+
+    const updatedProduct = await product.update(req.body);
+    res.json(updatedProduct);
+  } catch (error){
+    res.status(500).json({ message: 'Greška pri ažuriranju proizvoda', error});
+  }
+};
