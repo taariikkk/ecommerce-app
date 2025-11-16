@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/db.js';
 import OrderItem from './OrderItem.js';
+import Category from './Category.js';
 
 const Product = sequelize.define('Product', {
   name: {
@@ -19,16 +20,10 @@ const Product = sequelize.define('Product', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   inStock: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
 });
-
-Product.hasMany(OrderItem, { foreignKey: 'productId' });
 
 export default Product;
