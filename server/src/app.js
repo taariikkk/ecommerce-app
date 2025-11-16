@@ -3,8 +3,10 @@ import authRoutes from './routes/authRoutes.js';
 import errorHandler from './middleware/errorHandler.js';
 import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 
 // Middleware
 app.use(express.json());
