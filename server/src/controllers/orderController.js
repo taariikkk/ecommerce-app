@@ -4,7 +4,7 @@ import Product from '../models/Product.js';
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { items } = req.body; // [{ productId, quantity }]
+    const { items } = req.body;
     const userId = req.user.id;
 
     let totalPrice = 0;
@@ -42,10 +42,9 @@ export const createOrder = async (req, res, next) => {
     // Vrati narudžbu sa stavkama
     const orderWithItems = await Order.findByPk(order.id, {
       include: [
-        { model: OrderItem, include: [Product] }
+        { model: OrderItem, as: 'items', include: [Product] }
       ]
     });
-
     res.status(201).json(orderWithItems);
   } catch (error) {
     next(error);
@@ -57,11 +56,10 @@ export const getUserOrders = async (req, res, next) => {
     const orders = await Order.findAll({
       where: { userId: req.user.id },
       include: [
-        { model: OrderItem, include: [Product] }
+        { model: OrderItem, as: 'items', include: [Product] }
       ],
       order: [['createdAt', 'DESC']]
     });
-
     res.json(orders);
   } catch (error) {
     next(error);
