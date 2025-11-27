@@ -1,35 +1,60 @@
-import { useAuth } from '../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { getProducts } from '../api/productApi';
+import ProductCard from '../components/ProductCard';
+import Loader from '../components/Loader';
 
 const Home = () => {
-  const { user, isAuthenticated, isAdmin, logout } = useAuth();
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await getProducts();
+        setProducts(response.data); 
+      } catch (err) {
+        console.error("Greška pri dohvatanju proizvoda:", err);
+        setError("Nismo uspeli da učitamo proizvode. Molimo pokušajte ponovo kasnije.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+// ...
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <Loader />;
+    }
+
+    if (error) {
+      return <p className="text-center text-red-500 text-lg">{error}</p>;
+    }
+
+    if (products.length === 0) {
+      return <p className="text-center text-gray-500 text-lg">Trenutno nema dostupnih proizvoda.</p>;
+    }
+
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto p-8">
-        <h1 className="text-4xl font-bold mb-8">Dobrodošli u E-Shop!</h1>
-
-        {isAuthenticated ? (
-          <div>
-            <p className="text-xl mb-4">
-              Ćao, <strong>{user.firstName} {user.lastName}</strong>!
-              {isAdmin && <span className="text-red-600"> (Admin)</span>}
-            </p>
-            <button
-              onClick={logout}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded"
-            >
-              Odjavi se
-            </button>
-          </div>
-        ) : (
-          <div>
-            <p>Niste prijavljeni.</p>
-            <Link to="/login" className="text-blue-600 underline mr-4">Prijavi se</Link>
-            <Link to="/register" className="text-blue-600 underline">Registruj se</Link>
-          </div>
-        )}
+    <div className="container mx-auto p-4 sm:p-6 lg:p-8">
+      <div className="mb-8 text-center">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">Naša Ponuda</h1>
+        <p className="text-gray-600 mt-2">Istražite najnovije proizvode u našoj kolekciji</p>
       </div>
+      
+      {renderContent()}
     </div>
   );
 };
