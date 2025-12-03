@@ -3,12 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { getProductById } from '../api/productApi';
 import Loader from '../components/Loader';
 import { formatCurrency } from '../utils/formatCurrency';
+import { useCart } from '../hooks/useCart';
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { addToCart } = useCart();
   const { id } = useParams();
 
   useEffect(() => {
@@ -49,9 +50,7 @@ const ProductDetail = () => {
   }
 
   // KORAK 4: Finalni prikaz
-  const imageUrl = product.image
-    ? `http://localhost:5000${product.image}`
-    : 'https://via.placeholder.com/600x600';
+  const imageUrl = 'https://plus.unsplash.com/premium_photo-1683865776032-07bf70b0add1?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
   return (
     <div className="container mx-auto p-4 sm:p-6 lg:p-8">
@@ -83,8 +82,9 @@ const ProductDetail = () => {
             <div className="mt-6">
               <button 
                 disabled={!product.inStock} 
+                onClick={() => addToCart(product)}
                 className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed">
-                Dodaj u korpu
+                {product.inStock ? 'Dodaj u korpu' : 'Nije na stanju'}
               </button>
             </div>
           </div>
