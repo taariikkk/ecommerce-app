@@ -4,6 +4,7 @@ import { getProductById } from '../api/productApi';
 import Loader from '../components/Loader';
 import { formatCurrency } from '../utils/formatCurrency';
 import { useCart } from '../hooks/useCart';
+import styles from './ProductDetail.module.css';
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
@@ -36,9 +37,9 @@ const ProductDetail = () => {
 
   if (error) {
     return (
-      <div className="text-center py-10">
-        <p className="text-red-500 text-xl">{error}</p>
-        <Link to="/" className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+      <div className={styles.errorContainer}>
+        <p className={styles.errorMessage}>{error}</p>
+        <Link to="/" className={styles.backButton}>
           Vrati se na početnu
         </Link>
       </div>
@@ -46,47 +47,56 @@ const ProductDetail = () => {
   }
 
   if (!product) {
-    return <p>Proizvod nije pronađen.</p>;
+    return <p className={styles.errorContainer}>Proizvod nije pronađen.</p>;
   }
 
-  // KORAK 4: Finalni prikaz
-  const imageUrl = 'https://plus.unsplash.com/premium_photo-1683865776032-07bf70b0add1?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  const imageUrl = product.image || 'https://via.placeholder.com/600x400';
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden md:flex">
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
         
-        <div className="md:w-1/2">
-          <img src={imageUrl} alt={product.name} className="w-full h-full object-cover" />
+        {/* Lijeva strana: Slika */}
+        <div className={styles.imageContainer}>
+          <img 
+            src={imageUrl} 
+            alt={product.name} 
+            className={styles.image} 
+          />
         </div>
 
-        <div className="md:w-1/2 p-6 flex flex-col justify-center">
+        {/* Desna strana: Detalji */}
+        <div className={styles.detailsContainer}>
           <div>
             {product.Category && (
-               <span className="text-sm text-gray-500 bg-gray-200 py-1 px-3 rounded-full">
+               <span className={styles.categoryTag}>
                  {product.Category.name}
                </span>
             )}
-            <h1 className="text-3xl font-bold text-gray-800 mt-2">{product.name}</h1>
-            <p className="text-3xl font-light text-gray-900 my-4">
+            
+            <h1 className={styles.title}>{product.name}</h1>
+            
+            <p className={styles.price}>
               {formatCurrency(product.price)}
             </p>
-            <p className="text-gray-600 leading-relaxed">
+            
+            <p className={styles.description}>
               {product.description}
             </p>
-            <div className="mt-6">
-               <span className={`text-sm font-semibold ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-                {product.inStock ? 'Na stanju' : 'Nije na stanju'}
+            
+            <div className={styles.stockStatus}>
+               <span className={product.inStock ? styles.inStock : styles.outOfStock}>
+                {product.inStock ? '● Na stanju' : '● Nije na stanju'}
                </span>
             </div>
-            <div className="mt-6">
-              <button 
-                disabled={!product.inStock} 
-                onClick={() => addToCart(product)}
-                className="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed">
-                {product.inStock ? 'Dodaj u korpu' : 'Nije na stanju'}
-              </button>
-            </div>
+            
+            <button 
+              disabled={!product.inStock} 
+              onClick={() => addToCart(product)}
+              className={styles.addToCartBtn}
+            >
+              {product.inStock ? 'Dodaj u korpu' : 'Nije na stanju'}
+            </button>
           </div>
         </div>
 
