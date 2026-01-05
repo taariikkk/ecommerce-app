@@ -5,12 +5,12 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
+import Orders from './pages/Orders';
 
 function App() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      
       <main className="container mx-auto p-4">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -18,6 +18,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/orders" element={<Orders />} /> 
         </Routes>
       </main>
     </div>

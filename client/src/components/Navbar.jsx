@@ -37,10 +37,13 @@ const Navbar = () => {
                 <span className="text-sm font-semibold text-gray-800 hidden sm:block">
                   {user.firstName}
                 </span>
-                <button 
-                  onClick={logout}
-                  className="text-sm text-red-500 hover:text-red-700 font-medium"
-                >
+                
+                {/* Novi Link */}
+                <Link to="/orders" className="text-sm text-gray-600 hover:text-blue-600 font-medium">
+                  Moje narudžbe
+                </Link>
+
+                <button onClick={logout} className="text-sm text-red-500 hover:text-red-700 font-medium">
                   Odjava
                 </button>
               </div>
