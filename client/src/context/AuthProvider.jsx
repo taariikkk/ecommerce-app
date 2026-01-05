@@ -1,22 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { loginUser, registerUser } from '../api/authApi.js';
 import { AuthContext } from './AuthContext.js';
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+      const userData = localStorage.getItem('user');
+      return userData ? JSON.parse(userData) : null;
+  });  
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Provjera pri učitavanju
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const userData = localStorage.getItem('user');
-    if (token && userData) {
-      setUser(JSON.parse(userData));
-    }
-  }, []);
 
   const login = async (credentials) => {
     setIsLoading(true);

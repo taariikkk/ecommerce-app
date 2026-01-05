@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
+import Admin from './pages/Admin';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/orders" element={<Orders />} /> 
+          <Route path="/orders" element={<Orders />} />
+          {/* Admin Ruta */}
+          <Route path="/admin" element={<AdminRoute> <Admin /> </AdminRoute>} /> 
         </Routes>
       </main>
     </div>
