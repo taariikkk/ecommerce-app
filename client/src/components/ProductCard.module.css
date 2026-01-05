@@ -1,0 +1,96 @@
+.card {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden; /* Da slika ne izlazi van rubova */
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Da sve kartice budu iste visine */
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Malo se podigne */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.imageWrapper {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* Zoom efekat na sliku kad pređeš mišem preko kartice */
+.card:hover .image {
+  transform: scale(1.1);
+}
+
+.content {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Popunjava ostatak prostora */
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  /* Da tekst ne bude predugacak (3 tackice) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: auto; /* Gura dugmad na dno */
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--secondary-color);
+}
+
+.detailsLink {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.detailsLink:hover {
+  color: var(--primary-color);
+}
+
+.btnAdd {
+  background-color: var(--white);
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btnAdd:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}

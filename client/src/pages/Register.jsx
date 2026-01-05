@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import styles from './Register.module.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -21,30 +22,69 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
-        <div className="mb-4">
-          <label className="block mb-2 text-sm font-bold">First Name</label>
-          <input type="text" name="firstName" onChange={handleChange} className="w-full px-3 py-2 border rounded" required />
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.card}>
+        <h2 className={styles.title}>Kreiraj nalog</h2>
+        
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Ime</label>
+          <input 
+            type="text" 
+            name="firstName" 
+            onChange={handleChange} 
+            className={styles.input} 
+            required 
+            placeholder="npr. Marko"
+          />
         </div>
-        <div className="mb-4">
-          <label className="block mb-2 text-sm font-bold">Last Name</label>
-          <input type="text" name="lastName" onChange={handleChange} className="w-full px-3 py-2 border rounded" required />
+
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Prezime</label>
+          <input 
+            type="text" 
+            name="lastName" 
+            onChange={handleChange} 
+            className={styles.input} 
+            required 
+            placeholder="npr. Marković"
+          />
         </div>
-        <div className="mb-4">
-          <label className="block mb-2 text-sm font-bold">Email</label>
-          <input type="email" name="email" onChange={handleChange} className="w-full px-3 py-2 border rounded" required />
+
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Email</label>
+          <input 
+            type="email" 
+            name="email" 
+            onChange={handleChange} 
+            className={styles.input} 
+            required 
+            placeholder="vasa@adresa.com"
+          />
         </div>
-        <div className="mb-6">
-          <label className="block mb-2 text-sm font-bold">Password</label>
-          <input type="password" name="password" onChange={handleChange} className="w-full px-3 py-2 border rounded" required />
+
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Lozinka</label>
+          <input 
+            type="password" 
+            name="password" 
+            onChange={handleChange} 
+            className={styles.input} 
+            required 
+            placeholder="Najmanje 6 karaktera"
+          />
         </div>
-        <button type="submit" disabled={isLoading} className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:bg-blue-300">
-          {isLoading ? 'Registering...' : 'Register'}
+
+        <button 
+          type="submit" 
+          disabled={isLoading} 
+          className={styles.button}
+        >
+          {isLoading ? 'Registracija...' : 'Registruj se'}
         </button>
-         <p className="text-center mt-4">
-          Već imate nalog? <Link to="/login" className="text-blue-500 hover:underline">Prijavite se</Link>
+        
+        <p className={styles.footer}>
+          Već imate nalog? 
+          <Link to="/login" className={styles.link}>Prijavite se</Link>
         </p>
       </form>
     </div>

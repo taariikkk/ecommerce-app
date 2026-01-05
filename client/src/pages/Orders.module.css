@@ -1,0 +1,131 @@
+.container {
+  max-width: 800px; /* Uži layout za bolju čitljivost */
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 1rem;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Kartica pojedinačne narudžbe */
+.orderCard {
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.orderCard:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Header narudžbe */
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.orderInfo {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.orderId {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.orderSummary {
+  text-align: right;
+}
+
+.totalPrice {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.statusPending {
+  background-color: #fef3c7;
+  color: #92400e; /* Žuta */
+}
+
+.statusPaid {
+  background-color: #d1fae5;
+  color: #065f46; /* Zelena */
+}
+
+/* Lista stavki */
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.itemName {
+  color: var(--text-dark);
+}
+
+.itemQuantity {
+  color: var(--text-light);
+  margin-left: 0.5rem;
+}
+
+.itemPrice {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.emptyTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.emptyLink {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: underline;
+}

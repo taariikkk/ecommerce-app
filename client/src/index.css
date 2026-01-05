@@ -1,3 +1,53 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  /* Naša paleta boja */
+  --primary-color: #2563eb;    /* Plava */
+  --primary-hover: #1d4ed8;
+  --secondary-color: #f3f4f6;  /* Svijetlo siva */
+  --text-dark: #1f2937;        /* Skoro crna */
+  --text-light: #6b7280;       /* Siva za opis */
+  --white: #ffffff;
+  --danger: #ef4444;           /* Crvena */
+  --success: #10b981;          /* Zelena */
+  
+  /* Razmaci */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  
+  /* Ostalo */
+  --radius: 8px;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--secondary-color);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Globalni kontejner da centrira sadržaj */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}

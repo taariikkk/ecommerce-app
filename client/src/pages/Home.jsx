@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getProducts } from '../api/productApi';
 import ProductCard from '../components/ProductCard';
 import Loader from '../components/Loader';
 import FilterSidebar from '../components/FilterSidebar';
+import styles from './Home.module.css';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
@@ -17,24 +18,22 @@ const Home = () => {
       try {
         const response = await getProducts({ categoryId: selectedCategory });
         setProducts(response.data); 
-      } catch (err) {
-        console.error("Greška:", err);
+      } catch {
         setError("Greška pri učitavanju.");
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchProducts();
   }, [selectedCategory]);
 
   const renderContent = () => {
     if (isLoading) return <Loader />;
-    if (error) return <p className="text-red-500">{error}</p>;
-    if (products.length === 0) return <p className="text-gray-500">Nema proizvoda u ovoj kategoriji.</p>;
+    if (error) return <p className="text-red-500 text-center">{error}</p>;
+    if (products.length === 0) return <p className="text-gray-500 text-center">Nema proizvoda.</p>;
 
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={styles.productsGrid}>
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
@@ -43,21 +42,33 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 sm:p-6 lg:p-8">
-      <div className="mb-8 text-center">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">Naša Ponuda</h1>
-      </div>
+    <div className="container"> {/* Globalna klasa iz index.css */}
       
-      <div className="flex flex-col lg:flex-row gap-8">
+      {/* Hero Baner */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroContent}>
+          <h1>Nova Kolekcija 2026</h1>
+          <p>Otkrijte najbolje proizvode po nevjerovatnim cijenama.</p>
+          <a href="#shop" className={styles.ctaButton}>Kupi Odmah</a>
+        </div>
+      </section>
+
+      {/* Glavni Sadržaj */}
+      <div className={styles.mainContent} id="shop">
         
-        <div className="lg:w-1/4">
+        {/* Sidebar */}
+        <aside className={styles.sidebarWrapper}>
           <FilterSidebar 
             selectedCategory={selectedCategory} 
             onSelectCategory={setSelectedCategory} 
           />
-        </div>
+        </aside>
 
-        <div className="lg:w-3/4">
+        {/* Lista Proizvoda */}
+        <div className={styles.productsWrapper}>
+          <h2 style={{ marginBottom: '1rem', fontWeight: '600' }}>
+            {selectedCategory ? 'Odabrana Kategorija' : 'Svi Proizvodi'}
+          </h2>
           {renderContent()}
         </div>
         
