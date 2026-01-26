@@ -110,4 +110,4 @@ npm run dev
 Created by Tarik Ohran - Junior Full Stack Developer.
 Feel free to reach out for collaboration or questions!
 
-[LinkedIn](www.linkedin.com/in/tarik-ohran-53348721a) | [GitHub](https://github.com/taariikkk)
+[LinkedIn](https://www.linkedin.com/in/tarik-ohran-53348721a/) | [GitHub](https://github.com/taariikkk)
