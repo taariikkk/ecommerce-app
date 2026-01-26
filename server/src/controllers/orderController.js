@@ -4,7 +4,7 @@ import Product from '../models/Product.js';
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { items } = req.body;
+    const { items, paymentId } = req.body;
     const userId = req.user.id;
 
     let totalPrice = 0;
@@ -32,6 +32,8 @@ export const createOrder = async (req, res, next) => {
     const order = await Order.create({
       userId,
       totalPrice,
+      paymentStatus: paymentId ? 'paid' : 'pending',
+      stripePaymentId: paymentId || null,
     });
 
     // Dodaj stavke
