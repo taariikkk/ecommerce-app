@@ -3,7 +3,7 @@ import Category from '../models/Category.js';
 // Kreiraj novu kategoriju (samo admin)
 export const createCategory = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name } = req.body;	
     if (!name) {
       return res.status(400).json({ message: 'Naziv je obavezan' });
     }
@@ -21,5 +21,19 @@ export const getCategories = async (req, res) => {
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: 'Greška pri dohvatanju kategorija', error });
+  }
+};
+
+export const deleteCategory = async (req, res, next) => {
+  try {
+    const category = await Category.findByPk(req.params.id);
+    if (!category) {
+       res.status(404).json({ message: 'Kategorija pod tim ID-em ne postoji!' });
+    }
+    
+    await category.destroy();
+    res.json({ message: 'Category has been deleted' });
+  } catch (error) {
+     next(error);
   }
 };

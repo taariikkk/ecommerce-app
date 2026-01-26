@@ -12,6 +12,14 @@ const Order = sequelize.define('Order', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  paymentStatus: {
+    type: DataTypes.STRING,
+    defaultValue: 'pending',
+  },
+  stripePaymentId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   status: {
     type: DataTypes.STRING,
     defaultValue: 'pending', // pending, paid, shipped, delivered

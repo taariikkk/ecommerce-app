@@ -2,17 +2,15 @@ import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 export const getProducts = async (req, res, next) => {
   try {
-    // Čitamo categoryId iz query parametara (URL-a)
     const { categoryId } = req.query; 
 
-    // Pravimo objekat za filtriranje
     const whereClause = {};
     if (categoryId) {
       whereClause.categoryId = categoryId;
     }
 
     const products = await Product.findAll({
-      where: whereClause, //OVDJE SE DEŠAVA FILTRIRANJE
+      where: whereClause,
       include: [{
         model: Category,
         attributes: ['name']
