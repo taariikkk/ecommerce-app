@@ -6,7 +6,6 @@ dotenv.config();
 let sequelize;
 
 if (process.env.DATABASE_URL) {
-  // PRODUKCIJA: Render + Supabase
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     protocol: 'postgres',
@@ -14,12 +13,17 @@ if (process.env.DATABASE_URL) {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false, // važno za Supabase
+        rejectUnauthorized: false, 
       },
     },
+    pool: {
+      max: 10,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
   });
 } else {
-  // LOKALNI RAZVOJ
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -29,7 +33,7 @@ if (process.env.DATABASE_URL) {
       dialect: 'postgres',
       logging: false,
       dialectOptions: {
-        ssl: process.env.DB_HOST !== 'localhost', // SSL samo ako nije localhost
+        ssl: process.env.DB_HOST !== 'localhost',
       },
     }
   );
