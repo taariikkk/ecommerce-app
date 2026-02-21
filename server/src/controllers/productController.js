@@ -1,21 +1,45 @@
+import { Op } from 'sequelize';
 import Product from '../models/Product.js';
 import Category from '../models/Category.js';
 export const getProducts = async (req, res, next) => {
   try {
-    const { categoryId } = req.query; 
+    const { categoryId, search, sortBy } = req.query;
 
+    // 1. Filtriranje (WHERE)
     const whereClause = {};
+
+    // Ako imamo categoryId
     if (categoryId) {
       whereClause.categoryId = categoryId;
     }
 
+    // Ako imamo search (Pretraga po imenu)
+    if (search) {
+      whereClause.name = {
+        [Op.iLike]: `%${search}%`
+      };
+    }
+
+    // 2. Sortiranje (ORDER BY)
+    let orderClause = [['createdAt', 'DESC']];
+
+    if (sortBy === 'price_asc') {
+      orderClause = [['price', 'ASC']]; // Najjeftinije
+    } else if (sortBy === 'price_desc') {
+      orderClause = [['price', 'DESC']]; // Najskuplje
+    } else if (sortBy === 'name_asc') {
+      orderClause = [['name', 'ASC']]; // A-Z
+    }
+
     const products = await Product.findAll({
       where: whereClause,
+      order: orderClause,
       include: [{
         model: Category,
         attributes: ['name']
       }]
     });
+
     res.json(products);
   } catch (error) {
     next(error);
