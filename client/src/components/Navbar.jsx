@@ -34,9 +34,11 @@ const Navbar = () => {
           {/* Auth sekcija */}
           {user ? (
             <div className={styles.authSection}>
-              <span className={styles.userWelcome}>
-                {user.firstName}
-              </span>
+              <Link to="/profile">
+                <span className={styles.userWelcome}>
+                  {user.firstName}
+                </span>
+              </Link>
               <Link to="/orders" className={styles.link}>
                 Narudžbe
               </Link>
