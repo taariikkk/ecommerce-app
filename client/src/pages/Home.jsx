@@ -14,37 +14,22 @@ const Home = () => {
   const [sortBy, setSortBy] = useState('');
 
   useEffect(() => {
-    const fetchProducts = async () => {
+     const fetchProducts = async () => {
       setIsLoading(true);
       try {
-        const params = {
-          categoryId: selectedCategory,
-          search: searchTerm,
-          sortBy: sortBy
-        };
+        const params = { categoryId: selectedCategory, search: searchTerm, sortBy: sortBy };
         const response = await getProducts(params);
         setProducts(response.data);
-      } catch {
-        setError("Greška pri učitavanju.");
-      } finally {
-        setIsLoading(false);
-      }
+      } catch { setError("Greška pri učitavanju."); } finally { setIsLoading(false); }
     };
     fetchProducts();
   }, [selectedCategory, sortBy, searchTerm]);
 
   const renderContent = () => {
-    if (isLoading) return <Loader />;
-    if (error) return <p className="text-red-500 text-center">{error}</p>;
-    if (products.length === 0) return <p className="text-gray-500 text-center">Nema proizvoda.</p>;
-
-    return (
-      <div className={styles.productsGrid}>
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    );
+     if (isLoading) return <Loader />;
+     if (error) return <p className="text-red-500 text-center">{error}</p>;
+     if (products.length === 0) return <p className="text-gray-500 text-center">Nema proizvoda.</p>;
+     return <div className={styles.productsGrid}>{products.map(p => <ProductCard key={p.id} product={p} />)}</div>;
   };
 
   return (
@@ -59,37 +44,35 @@ const Home = () => {
       </section>
 
       <div className={styles.mainContent} id="shop">
-        {/* Sidebar (Kategorije) */}
         <aside className={styles.sidebarWrapper}>
-          <FilterSidebar 
-            selectedCategory={selectedCategory} 
-            onSelectCategory={setSelectedCategory} 
-          />
+          <FilterSidebar selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
         </aside>
 
-        {/* Glavni dio */}
         <div className={styles.productsWrapper}>
-          {/* --- NOVO: Search & Sort Bar --- */}
-          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 bg-white p-4 rounded shadow-sm">
-            {/* Search Input */}
-            <div className="relative w-full sm:w-1/2">
+          <div className={styles.toolbar}>
+            
+            <div className={styles.searchContainer}>
+              {/* Ikonica Lupa (SVG) */}
+              <svg xmlns="http://www.w3.org/2000/svg" className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              
               <input 
                 type="text" 
                 placeholder="Pretraži proizvode..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border p-2 pl-4 rounded-full focus:outline-none focus:border-blue-500 transition"
+                className={styles.searchInput}
               />
-              <span className="absolute right-3 top-2.5 text-gray-400">🔍</span>
             </div>
 
-            {/* Sort Dropdown */}
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium text-gray-600">Sortiraj:</label>
+            <div className={styles.sortContainer}>
+              <label className={styles.sortLabel}>Sortiraj:</label>
               <select 
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border p-2 rounded focus:outline-none bg-white"
+                className={styles.sortSelect}
               >
                 <option value="">Najnovije</option>
                 <option value="price_asc">Cijena: Niska &rarr; Visoka</option>
@@ -100,10 +83,9 @@ const Home = () => {
           </div>
           <h2 style={{ marginBottom: '1rem', fontWeight: '600' }}>
             {selectedCategory ? 'Rezultati' : 'Svi Proizvodi'}
-            {searchTerm && <span className="text-gray-500 text-sm ml-2">(Pretraga: "{searchTerm}")</span>}
+            {searchTerm && <span style={{fontSize: '0.9rem', color: '#6b7280', marginLeft: '0.5rem'}}>(Pretraga: "{searchTerm}")</span>}
           </h2>
 
-          {/* Lista Proizvoda */}
           {renderContent()}
         </div>
       </div>

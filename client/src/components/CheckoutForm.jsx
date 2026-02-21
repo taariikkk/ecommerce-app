@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { formatCurrency } from '../utils/formatCurrency';
 import toast from 'react-hot-toast';
+import styles from './CheckoutForm.module.css';
 
 const CheckoutForm = ({ totalAmount, onSuccess }) => {
   const stripe = useStripe();
@@ -13,44 +14,28 @@ const CheckoutForm = ({ totalAmount, onSuccess }) => {
   useEffect(() => {
     if (!stripe) return;
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
+    const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
     if (!clientSecret) return;
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Uplata uspješna!");
-          break;
-        case "processing":
-          setMessage("Uplata se obrađuje.");
-          break;
-        case "requires_payment_method":
-          setMessage("Uplata nije uspjela, pokušajte ponovo.");
-          break;
-        default:
-          setMessage("Nešto je pošlo po zlu.");
-          break;
+        case "succeeded": setMessage("Uplata uspješna!"); break;
+        case "processing": setMessage("Uplata se obrađuje."); break;
+        case "requires_payment_method": setMessage("Uplata nije uspjela."); break;
+        default: setMessage("Nešto je pošlo po zlu."); break;
       }
     });
   }, [stripe]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
 
     setIsLoading(true);
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: window.location.origin + "/orders",
-      },
+      confirmParams: { return_url: window.location.origin + "/orders" },
       redirect: "if_required", 
     });
 
@@ -67,19 +52,20 @@ const CheckoutForm = ({ totalAmount, onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Plaćanje</h2>
-      <p className="mb-4 text-gray-600">Ukupno za platiti: <span className="font-bold text-blue-600">{formatCurrency(totalAmount)}</span></p>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <h2 className={styles.heading}>Plaćanje</h2>
+      <p className={styles.totalText}>
+        Ukupno za platiti: <span className={styles.amount}>{formatCurrency(totalAmount)}</span>
+      </p>
       
-      {/* Stripe Element (Unos kartice) */}
       <PaymentElement id="payment-element" />
       
-      {message && <div className="text-red-500 mt-2 text-sm">{message}</div>}
+      {message && <div className={styles.errorMessage}>{message}</div>}
 
       <button 
         disabled={isLoading || !stripe || !elements} 
         id="submit"
-        className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded mt-6 hover:bg-blue-700 disabled:bg-gray-400 transition"
+        className={styles.payBtn}
       >
         {isLoading ? "Obrađujem..." : "Plati sada"}
       </button>

@@ -1,0 +1,51 @@
+.form {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.totalText {
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+}
+
+.amount {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.errorMessage {
+  color: var(--danger);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.payBtn {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-weight: 700;
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: none;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.payBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+.payBtn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}

@@ -9,6 +9,7 @@ import Orders from './pages/Orders';
 import Admin from './pages/Admin';
 import AdminRoute from './components/AdminRoute';
 import Checkout from './pages/Checkout';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           {/* Admin Ruta */}
           <Route path="/admin" element={<AdminRoute> <Admin /> </AdminRoute>} /> 
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
     </div>

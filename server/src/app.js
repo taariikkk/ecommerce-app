@@ -6,6 +6,7 @@ import orderRoutes from './routes/orderRoutes.js';
 import cors from 'cors';
 import categoryRoutes from './routes/categoryRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 app.use(cors());
@@ -23,6 +24,8 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/categories', categoryRoutes);
 
 app.use('/api/payment', paymentRoutes);
+
+app.use('/api/users', userRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

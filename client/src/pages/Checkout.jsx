@@ -8,6 +8,7 @@ import CheckoutForm from '../components/CheckoutForm';
 import Loader from '../components/Loader';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import styles from './Checkout.module.css';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -25,9 +26,7 @@ const Checkout = () => {
     const itemsForBackend = cartItems.map(item => ({ productId: item.id, quantity: item.quantity }));
     
     createPaymentIntent(itemsForBackend)
-      .then((res) => {
-        setClientSecret(res.data.clientSecret);
-      })
+      .then((res) => setClientSecret(res.data.clientSecret))
       .catch((err) => {
         console.error(err);
         toast.error("Greška pri inicijalizaciji plaćanja.");
@@ -38,37 +37,27 @@ const Checkout = () => {
     try {
       const orderData = {
         items: cartItems.map(item => ({ productId: item.id, quantity: item.quantity })),
-        
         paymentId: paymentIntent.id, 
-        
         totalAmount: paymentIntent.amount / 100 
       };
-      
       await createOrder(orderData);
-      
       clearCart();
       toast.success("Plaćanje uspješno! Narudžba kreirana.");
       navigate('/orders');
     } catch (error) {
       console.error(error);
-      toast.error("Plaćanje je prošlo, ali nismo uspjeli sačuvati narudžbu. Kontaktirajte podršku.");
+      toast.error("Greška pri čuvanju narudžbe.");
     }
   };
 
   if (!clientSecret) return <Loader />;
 
-  const appearance = { theme: 'stripe' };
-  const options = { clientSecret, appearance };
-
   return (
-    <div className="container mx-auto p-4 max-w-lg">
-      <h1 className="text-2xl font-bold mb-6 text-center">Završetak kupovine</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Završetak kupovine</h1>
       {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm 
-            totalAmount={cartTotal} 
-            onSuccess={handlePaymentSuccess}
-          />
+        <Elements options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
+          <CheckoutForm totalAmount={cartTotal} onSuccess={handlePaymentSuccess} />
         </Elements>
       )}
     </div>
