@@ -1,5 +1,25 @@
 # 🛒 E-Shop - Full Stack E-commerce Application
 
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://ecommerce-app-five-swart.vercel.app/)
+[![Status](https://img.shields.io/badge/status-development-blue.svg)]()
+
+> 🌐 **Try the Live Demo:** 👉 [**Click Here to Open App**](https://ecommerce-app-five-swart.vercel.app/)
+
+### 🔑 Demo Credentials (Try it yourself!)
+
+To experience the full functionality including the **Protected Admin Dashboard** and **Stripe Payment**, use these credentials:
+
+| Role | Email | Password | Features to Test |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin@shop.ba` | `admin123` | Product Management (CRUD), Category Management |
+| **User** | *(Register new)* | *(Any)* | Shopping Cart, Profile, Stripe Checkout |
+
+> 💳 **Test Credit Card:** Use `4242 4242 4242 4242` for Stripe payments (Expiry: any future date, CVC: any 3 digits).
+
+---
+
+A modern, robust e-commerce platform built to simulate a real-world shopping experience...
+
 > **Project Status:** 🚧 **In Development** (Beta Phase)
 >
 > *Current Focus: Implementing advanced filtering and user profile management.*
@@ -67,10 +87,17 @@ Follow these steps to run the project locally.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/ecommerce-app.git
+git clone https://github.com/taariikkk/ecommerce-app.git
+cd ecommerce-app
 ```
 
-### 2. Backend Setup
+### 2. Database Setup
+Before running the server, create a PostgreSQL database (Run this in your Postgres termilan (psql) or PGAdmin):
+```bash
+CREATE DATABASE ecommerce_db;
+```
+
+### 3. Backend Setup
 ```bash
 cd server
 npm install
@@ -90,12 +117,13 @@ STRIPE_SECRET_KEY=sk_test_...
 npm start
 ```
 
-### 3. Frontend Setup
+### 4. Frontend Setup
+Open a new terminal in your VSC or other IDE:
 ```bash
 cd client
 npm install
 ```
-**Create a .env file in /client root and add this variable:**
+**Create a .env file in /client root and add this variable (Get this from Stripe dashboard):**
 ```bash
 VITE_STRIPE_PUBLIC_KEY=pk_test_...
 ```
@@ -104,6 +132,16 @@ VITE_STRIPE_PUBLIC_KEY=pk_test_...
 npm run dev
 ```
 
+---
+
+## Admin role
+If you want to use the Admin role, Log in with the following information:
+```bash
+admin@shop.ba
+```
+```bash
+admin123
+```
 ---
 
 ## 🤝 Contact
