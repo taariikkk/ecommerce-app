@@ -29,7 +29,7 @@ const Checkout = () => {
       .then((res) => setClientSecret(res.data.clientSecret))
       .catch((err) => {
         console.error(err);
-        toast.error("Greška pri inicijalizaciji plaćanja.");
+        toast.error("Error initializing payment.");
       });
   }, [cartItems, navigate]);
 
@@ -42,21 +42,60 @@ const Checkout = () => {
       };
       await createOrder(orderData);
       clearCart();
-      toast.success("Plaćanje uspješno! Narudžba kreirana.");
+      toast.success("Payment successful! Your order has been placed.");
       navigate('/orders');
     } catch (error) {
       console.error(error);
-      toast.error("Greška pri čuvanju narudžbe.");
+      toast.error("Error saving order.");
     }
   };
 
-  if (!clientSecret) return <Loader />;
+  if (!clientSecret) {
+    return (
+      <div className={styles.container}>
+        <Loader />
+      </div>
+    );
+  }
+
+  // Custom Stripe Elements appearance for dark theme
+  const stripeAppearance = {
+    theme: 'night',
+    variables: {
+      colorPrimary: '#f5a623',
+      colorBackground: '#111111',
+      colorText: '#fafaf9',
+      colorDanger: '#ef4444',
+      fontFamily: '"DM Sans", system-ui, sans-serif',
+      borderRadius: '0px',
+    },
+    rules: {
+      '.Input': {
+        border: '1px solid #262626',
+        backgroundColor: 'transparent',
+      },
+      '.Input:focus': {
+        border: '1px solid #fafaf9',
+        boxShadow: 'none',
+      },
+      '.Label': {
+        fontSize: '0.75rem',
+        fontWeight: '500',
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        color: '#a8a8a8',
+      },
+    },
+  };
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Završetak kupovine</h1>
+      <h1 className={styles.title}>Complete Your Order</h1>
       {clientSecret && (
-        <Elements options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
+        <Elements 
+          options={{ clientSecret, appearance: stripeAppearance }} 
+          stripe={stripePromise}
+        >
           <CheckoutForm totalAmount={cartTotal} onSuccess={handlePaymentSuccess} />
         </Elements>
       )}

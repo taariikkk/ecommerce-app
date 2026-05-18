@@ -13,6 +13,15 @@ const ProductDetail = () => {
   const { addToCart } = useCart();
   const { id } = useParams();
 
+  // Premium fashion images
+  const fashionImages = [
+    'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=1200&fit=crop&q=85',
+    'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=800&h=1200&fit=crop&q=85',
+    'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&h=1200&fit=crop&q=85',
+    'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&h=1200&fit=crop&q=85',
+    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1200&fit=crop&q=85',
+  ];
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -21,8 +30,8 @@ const ProductDetail = () => {
         const response = await getProductById(id);
         setProduct(response.data);
       } catch (err) {
-        console.error(`Greška pri dohvatanju proizvoda sa ID ${id}:`, err);
-        setError('Proizvod nije pronađen ili je došlo do greške.');
+        console.error(`Error fetching product with ID ${id}:`, err);
+        setError('This piece could not be found.');
       } finally {
         setIsLoading(false);
       }
@@ -32,7 +41,11 @@ const ProductDetail = () => {
   }, [id]);
 
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div className={styles.container}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
@@ -40,23 +53,31 @@ const ProductDetail = () => {
       <div className={styles.errorContainer}>
         <p className={styles.errorMessage}>{error}</p>
         <Link to="/" className={styles.backButton}>
-          Vrati se na početnu
+          Return to Collection
         </Link>
       </div>
     );
   }
 
   if (!product) {
-    return <p className={styles.errorContainer}>Proizvod nije pronađen.</p>;
+    return (
+      <div className={styles.errorContainer}>
+        <p className={styles.errorMessage}>This piece could not be found.</p>
+        <Link to="/" className={styles.backButton}>
+          Return to Collection
+        </Link>
+      </div>
+    );
   }
 
-  const imageUrl = product.image || 'https://via.placeholder.com/600x400';
+  const imageIndex = product.id ? (product.id % fashionImages.length) : 0;
+  const imageUrl = product.image || fashionImages[imageIndex];
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         
-        {/* Lijeva strana: Slika */}
+        {/* Image Section */}
         <div className={styles.imageContainer}>
           <img 
             src={imageUrl} 
@@ -65,13 +86,13 @@ const ProductDetail = () => {
           />
         </div>
 
-        {/* Desna strana: Detalji */}
+        {/* Details Section */}
         <div className={styles.detailsContainer}>
           <div>
             {product.Category && (
-               <span className={styles.categoryTag}>
-                 {product.Category.name}
-               </span>
+              <span className={styles.categoryTag}>
+                {product.Category.name}
+              </span>
             )}
             
             <h1 className={styles.title}>{product.name}</h1>
@@ -81,21 +102,22 @@ const ProductDetail = () => {
             </p>
             
             <p className={styles.description}>
-              {product.description}
+              {product.description || 'Meticulously crafted with the finest materials, this piece embodies the essence of contemporary luxury. Designed for those who appreciate exceptional quality and timeless elegance.'}
             </p>
             
             <div className={styles.stockStatus}>
-               <span className={product.inStock ? styles.inStock : styles.outOfStock}>
-                {product.inStock ? '● Na stanju' : '● Nije na stanju'}
-               </span>
+              <span className={product.inStock ? styles.inStock : styles.outOfStock}>
+                {product.inStock ? 'In Stock' : 'Out of Stock'}
+              </span>
             </div>
             
             <button 
               disabled={!product.inStock} 
               onClick={() => addToCart(product)}
               className={styles.addToCartBtn}
+              aria-label={product.inStock ? `Add ${product.name} to bag` : 'Out of stock'}
             >
-              {product.inStock ? 'Dodaj u korpu' : 'Nije na stanju'}
+              {product.inStock ? 'Add to Bag' : 'Out of Stock'}
             </button>
           </div>
         </div>

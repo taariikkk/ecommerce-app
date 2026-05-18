@@ -14,82 +14,143 @@ const Home = () => {
   const [sortBy, setSortBy] = useState('');
 
   useEffect(() => {
-     const fetchProducts = async () => {
+    const fetchProducts = async () => {
       setIsLoading(true);
       try {
         const params = { categoryId: selectedCategory, search: searchTerm, sortBy: sortBy };
         const response = await getProducts(params);
         setProducts(response.data);
-      } catch { setError("Greška pri učitavanju."); } finally { setIsLoading(false); }
+      } catch { 
+        setError("Unable to load collection."); 
+      } finally { 
+        setIsLoading(false); 
+      }
     };
     fetchProducts();
   }, [selectedCategory, sortBy, searchTerm]);
 
   const renderContent = () => {
-     if (isLoading) return <Loader />;
-     if (error) return <p className="text-red-500 text-center">{error}</p>;
-     if (products.length === 0) return <p className="text-gray-500 text-center">Nema proizvoda.</p>;
-     return <div className={styles.productsGrid}>{products.map(p => <ProductCard key={p.id} product={p} />)}</div>;
+    if (isLoading) return <Loader />;
+    if (error) return <p className={styles.errorState}>{error}</p>;
+    if (products.length === 0) return (
+      <div className={styles.emptyState}>
+        <p className={styles.emptyStateText}>No pieces found in this collection.</p>
+      </div>
+    );
+    return (
+      <div className={styles.productsGrid}>
+        {products.map(p => <ProductCard key={p.id} product={p} />)}
+      </div>
+    );
+  };
+
+  const scrollToShop = () => {
+    document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="container">
-      {/* Hero Baner */}
+    <>
+      {/* Hero Section - Editorial Full-Bleed */}
       <section className={styles.heroSection}>
+        <div className={styles.heroBackground}>
+          <img 
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop&q=85" 
+            alt="Luxury fashion editorial"
+            className={styles.heroImage}
+          />
+          <div className={styles.heroOverlay}></div>
+        </div>
+        
         <div className={styles.heroContent}>
-          <h1>Nova Kolekcija 2026</h1>
-          <p>Otkrijte najbolje proizvode po nevjerovatnim cijenama.</p>
-          <a href="#shop" className={styles.ctaButton}>Kupi Odmah</a>
+          <span className={styles.heroEyebrow}>Spring/Summer 2026</span>
+          <h1 className={styles.heroTitle}>
+            The Art of <em>Timeless</em> Design
+          </h1>
+          <p className={styles.heroDescription}>
+            Discover our curated collection of contemporary pieces that transcend seasons. 
+            Crafted with intention, designed for those who appreciate the extraordinary.
+          </p>
+          <button onClick={scrollToShop} className={styles.heroCta}>
+            Explore Collection
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className={styles.scrollIndicator}>
+          <span>Scroll</span>
+          <div className={styles.scrollLine}></div>
         </div>
       </section>
 
+      {/* Main Content */}
       <div className={styles.mainContent} id="shop">
         <aside className={styles.sidebarWrapper}>
-          <FilterSidebar selectedCategory={selectedCategory} onSelectCategory={setSelectedCategory} />
+          <FilterSidebar 
+            selectedCategory={selectedCategory} 
+            onSelectCategory={setSelectedCategory} 
+          />
         </aside>
 
         <div className={styles.productsWrapper}>
+          {/* Toolbar */}
           <div className={styles.toolbar}>
-            
             <div className={styles.searchContainer}>
-              {/* Ikonica Lupa (SVG) */}
-              <svg xmlns="http://www.w3.org/2000/svg" className={styles.searchIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className={styles.searchIcon} 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                strokeWidth={1.5} 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
               </svg>
-              
               <input 
                 type="text" 
-                placeholder="Pretraži proizvode..." 
+                placeholder="Search collection..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={styles.searchInput}
+                aria-label="Search products"
               />
             </div>
 
             <div className={styles.sortContainer}>
-              <label className={styles.sortLabel}>Sortiraj:</label>
+              <label className={styles.sortLabel} htmlFor="sort-select">Sort by</label>
               <select 
+                id="sort-select"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className={styles.sortSelect}
+                aria-label="Sort products"
               >
-                <option value="">Najnovije</option>
-                <option value="price_asc">Cijena: Niska &rarr; Visoka</option>
-                <option value="price_desc">Cijena: Visoka &rarr; Niska</option>
-                <option value="name_asc">Naziv (A-Z)</option>
+                <option value="">Latest</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="name_asc">Name (A-Z)</option>
               </select>
             </div>
           </div>
-          <h2 style={{ marginBottom: '1rem', fontWeight: '600' }}>
-            {selectedCategory ? 'Rezultati' : 'Svi Proizvodi'}
-            {searchTerm && <span style={{fontSize: '0.9rem', color: '#6b7280', marginLeft: '0.5rem'}}>(Pretraga: "{searchTerm}")</span>}
-          </h2>
+
+          {/* Section Header */}
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>
+              {selectedCategory ? 'Curated Selection' : 'All Pieces'}
+            </h2>
+            {searchTerm && (
+              <span className={styles.searchMeta}>
+                Searching for &ldquo;{searchTerm}&rdquo;
+              </span>
+            )}
+          </div>
 
           {renderContent()}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

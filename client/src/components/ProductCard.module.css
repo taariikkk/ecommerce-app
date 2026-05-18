@@ -1,96 +1,229 @@
+/* Premium Product Card Styles */
 .card {
-  background-color: var(--white);
-  border-radius: var(--radius);
-  overflow: hidden; /* Da slika ne izlazi van rubova */
-  box-shadow: var(--shadow);
-  transition: var(--transition);
+  position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%; /* Da sve kartice budu iste visine */
-  position: relative;
-}
-
-.card:hover {
-  transform: translateY(-5px); /* Malo se podigne */
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.imageWrapper {
-  height: 200px;
+  background-color: transparent;
   overflow: hidden;
+  animation: fadeUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Stagger delays for grid animation */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.15s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.25s; }
+.card:nth-child(5) { animation-delay: 0.3s; }
+.card:nth-child(6) { animation-delay: 0.35s; }
+.card:nth-child(7) { animation-delay: 0.4s; }
+.card:nth-child(8) { animation-delay: 0.45s; }
+
+/* Image wrapper with aspect ratio */
+.imageWrapper {
   position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background-color: var(--background-secondary);
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform var(--transition-slow), opacity var(--transition-base);
 }
 
-/* Zoom efekat na sliku kad pređeš mišem preko kartice */
+/* Secondary image that fades in on hover */
+.imageSecondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
 .card:hover .image {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
-.content {
+.card:hover .imageSecondary {
+  opacity: 1;
+}
+
+/* Quick add overlay */
+.quickAdd {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: var(--spacing-md);
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 100%);
+  transform: translateY(100%);
+  transition: transform var(--transition-base);
+  display: flex;
+  justify-content: center;
+}
+
+.card:hover .quickAdd {
+  transform: translateY(0);
+}
+
+.btnQuickAdd {
+  width: 100%;
+  padding: 14px var(--spacing-xl);
+  background-color: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  cursor: pointer;
+}
+
+.btnQuickAdd:hover {
+  background-color: var(--accent);
+  transform: scale(1.02);
+}
+
+/* Content section */
+.content {
+  padding: var(--spacing-lg) 0;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Popunjava ostatak prostora */
+  gap: var(--spacing-xs);
 }
 
 .title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin-bottom: 0.5rem;
-  /* Da tekst ne bude predugacak (3 tackice) */
-  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  transition: color var(--transition-fast);
+  
+  /* Text truncation */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+.card:hover .title {
+  color: var(--accent);
 }
 
 .price {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: auto; /* Gura dugmad na dno */
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--foreground-muted);
+  letter-spacing: 0.05em;
 }
 
+/* Hidden actions - accessible but visually subtle */
 .actions {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: var(--spacing-md);
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--secondary-color);
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.card:hover .actions {
+  opacity: 1;
 }
 
 .detailsLink {
-  font-size: 0.9rem;
-  color: var(--text-light);
+  font-size: 0.75rem;
   font-weight: 500;
-  transition: var(--transition);
+  color: var(--foreground-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color var(--transition-fast);
 }
 
 .detailsLink:hover {
-  color: var(--primary-color);
+  color: var(--accent);
 }
 
 .btnAdd {
-  background-color: var(--white);
-  border: 2px solid var(--primary-color);
-  color: var(--primary-color);
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: var(--transition);
+  display: none; /* Hidden - using quickAdd overlay instead */
 }
 
-.btnAdd:hover {
-  background-color: var(--primary-color);
-  color: var(--white);
+/* New tag */
+.newTag {
+  position: absolute;
+  top: var(--spacing-md);
+  left: var(--spacing-md);
+  padding: 6px 12px;
+  background-color: var(--accent);
+  color: var(--background);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  z-index: 10;
+}
+
+/* Wishlist button */
+.wishlistBtn {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(10px);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition-fast), background-color var(--transition-fast);
+  z-index: 10;
+}
+
+.card:hover .wishlistBtn {
+  opacity: 1;
+}
+
+.wishlistBtn:hover {
+  background-color: var(--background);
+}
+
+.wishlistBtn svg {
+  width: 18px;
+  height: 18px;
+  color: var(--foreground);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.wishlistBtn:hover svg {
+  color: var(--accent);
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .quickAdd {
+    transform: translateY(0);
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.95) 0%, transparent 100%);
+  }
+  
+  .wishlistBtn {
+    opacity: 1;
+  }
+  
+  .actions {
+    opacity: 1;
+  }
 }

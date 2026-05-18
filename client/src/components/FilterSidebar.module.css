@@ -1,45 +1,111 @@
+/* Premium Filter Sidebar Styles */
 .sidebar {
-  background-color: var(--white);
-  padding: var(--spacing-md);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  border: 1px solid #e5e7eb;
+  position: relative;
+  padding: var(--spacing-lg) 0;
+  animation: slideIn 0.6s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
 }
 
 .title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 2px solid var(--secondary-color);
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.02em;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-xs);
 }
 
 .button {
-  text-align: left;
-  padding: 10px 15px;
-  background: none;
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 1rem;
-  color: var(--text-dark);
-  transition: var(--transition);
   width: 100%;
+  padding: 12px 16px;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--foreground-muted);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width var(--transition-base);
 }
 
 .button:hover {
-  background-color: var(--secondary-color);
+  color: var(--foreground);
+  padding-left: 24px;
 }
 
-.active {
-  background-color: #eff6ff; /* Svijetlo plava */
-  color: var(--primary-color);
-  font-weight: 600;
-  border-left: 4px solid var(--primary-color);
+.button:hover::before {
+  width: 12px;
+}
+
+.button.active {
+  color: var(--accent);
+  font-weight: 500;
+  padding-left: 24px;
+}
+
+.button.active::before {
+  width: 12px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .sidebar {
+    padding: var(--spacing-md);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  
+  .button {
+    width: auto;
+    padding: 10px 20px;
+    border: 1px solid var(--border);
+    font-size: 0.75rem;
+  }
+  
+  .button::before {
+    display: none;
+  }
+  
+  .button:hover {
+    padding-left: 20px;
+    border-color: var(--foreground-subtle);
+  }
+  
+  .button.active {
+    padding-left: 20px;
+    background-color: var(--foreground);
+    color: var(--background);
+    border-color: var(--foreground);
+  }
 }
