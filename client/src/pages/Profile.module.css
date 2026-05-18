@@ -1,78 +1,111 @@
+/* Premium Profile Page Styles */
 .container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: var(--spacing-lg) var(--spacing-md);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  padding: 120px var(--spacing-lg) var(--spacing-3xl);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-3xl);
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .container {
-    flex-direction: row;
+    grid-template-columns: 400px 1fr;
+    padding: 140px var(--spacing-3xl) var(--spacing-3xl);
   }
 }
 
-/* Lijeva kolona */
+/* Profile Column */
 .profileColumn {
-  flex: 1;
-  max-width: 400px;
+  position: sticky;
+  top: 120px;
+  align-self: start;
 }
 
 .heading {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--text-dark);
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-xl);
+  letter-spacing: -0.02em;
 }
 
 .formCard {
-  background-color: var(--white);
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border);
+  padding: var(--spacing-2xl);
 }
 
 .formGroup {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .label {
   display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-dark);
+  margin-bottom: var(--spacing-sm);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--foreground-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: var(--radius);
+  padding: 14px 16px;
+  background-color: transparent;
+  border: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  transition: border-color var(--transition-fast);
+}
+
+.input::placeholder {
+  color: var(--foreground-subtle);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--foreground);
 }
 
 .input:disabled {
-  background-color: #f3f4f6;
+  background-color: var(--background-elevated);
+  color: var(--foreground-subtle);
   cursor: not-allowed;
 }
 
 .saveBtn {
   width: 100%;
-  background-color: var(--primary-color);
-  color: var(--white);
-  padding: 0.75rem;
-  border-radius: var(--radius);
-  border: none;
+  padding: 16px;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border: none;
   cursor: pointer;
-  margin-top: 1rem;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  margin-top: var(--spacing-lg);
 }
 
 .saveBtn:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--accent);
+  transform: translateY(-1px);
 }
 
-/* Desna kolona */
+/* Orders Column */
 .ordersColumn {
-  flex: 2;
+  min-width: 0;
+}
+
+/* Override Orders component styles when nested in Profile */
+.ordersColumn > div {
+  padding: 0;
 }

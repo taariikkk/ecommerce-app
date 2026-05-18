@@ -19,29 +19,34 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.card}>
-        <h2 className={styles.title}>Dobrodošli nazad</h2>
+        <h2 className={styles.title}>Welcome Back</h2>
+        <p className={styles.subtitle}>Sign in to access your account</p>
         
         <div className={styles.formGroup}>
-          <label className={styles.label}>Email</label>
+          <label className={styles.label} htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             name="email"
             onChange={handleChange}
             className={styles.input}
             required
-            placeholder="vasa@adresa.com"
+            placeholder="your@email.com"
+            autoComplete="email"
           />
         </div>
         
         <div className={styles.formGroup}>
-          <label className={styles.label}>Lozinka</label>
+          <label className={styles.label} htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
             name="password"
             onChange={handleChange}
             className={styles.input}
             required
-            placeholder="********"
+            placeholder="Enter your password"
+            autoComplete="current-password"
           />
         </div>
 
@@ -50,12 +55,12 @@ const Login = () => {
           disabled={isLoading}
           className={styles.button}
         >
-          {isLoading ? 'Prijava u toku...' : 'Prijavi se'}
+          {isLoading ? 'Signing in...' : 'Sign In'}
         </button>
         
         <p className={styles.footer}>
-          Nemate nalog? 
-          <Link to="/register" className={styles.link}>Registrujte se</Link>
+          Don&apos;t have an account?
+          <Link to="/register" className={styles.link}>Create one</Link>
         </p>
       </form>
     </div>

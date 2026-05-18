@@ -22,18 +22,18 @@ const Profile = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Lozinke se ne podudaraju');
+      toast.error('Passwords do not match');
       return;
     }
 
     try {
       const { data } = await updateUserProfile({ firstName, lastName, password });
       setUser(data);
-      toast.success('Profil ažuriran!');
+      toast.success('Profile updated successfully');
       setPassword('');
       setConfirmPassword('');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Greška');
+      toast.error(err.response?.data?.message || 'An error occurred');
     }
   };
 
@@ -41,12 +41,13 @@ const Profile = () => {
     <div className={styles.container}>
       
       <div className={styles.profileColumn}>
-        <h2 className={styles.heading}>Moj Profil</h2>
+        <h2 className={styles.heading}>Account Settings</h2>
         <form onSubmit={submitHandler} className={styles.formCard}>
           
           <div className={styles.formGroup}>
-            <label className={styles.label}>Ime</label>
+            <label className={styles.label} htmlFor="profileFirstName">First Name</label>
             <input
+              id="profileFirstName"
               type="text"
               className={styles.input}
               value={firstName}
@@ -55,8 +56,9 @@ const Profile = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Prezime</label>
+            <label className={styles.label} htmlFor="profileLastName">Last Name</label>
             <input
+              id="profileLastName"
               type="text"
               className={styles.input}
               value={lastName}
@@ -65,38 +67,43 @@ const Profile = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Email</label>
+            <label className={styles.label} htmlFor="profileEmail">Email</label>
             <input
+              id="profileEmail"
               type="email"
               className={styles.input}
-              value={user?.email}
+              value={user?.email || ''}
               disabled
+              aria-describedby="emailHelp"
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Nova Lozinka</label>
+            <label className={styles.label} htmlFor="profilePassword">New Password</label>
             <input
+              id="profilePassword"
               type="password"
               className={styles.input}
-              placeholder="Ostavite prazno ako ne mijenjate"
+              placeholder="Leave blank to keep current"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Potvrdi Lozinku</label>
+            <label className={styles.label} htmlFor="profileConfirmPassword">Confirm Password</label>
             <input
+              id="profileConfirmPassword"
               type="password"
               className={styles.input}
+              placeholder="Confirm new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
 
           <button type="submit" className={styles.saveBtn}>
-            Ažuriraj
+            Update Profile
           </button>
         </form>
       </div>
