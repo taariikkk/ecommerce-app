@@ -1,51 +1,68 @@
+/* Premium CheckoutForm Styles */
 .form {
-  background-color: var(--white);
-  padding: 2rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border);
+  padding: var(--spacing-2xl);
 }
 
 .heading {
+  font-family: var(--font-serif);
   font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--text-dark);
+  font-weight: 400;
+  color: var(--foreground);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.01em;
 }
 
 .totalText {
-  margin-bottom: 1.5rem;
-  color: var(--text-light);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--foreground-muted);
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
 }
 
 .amount {
-  font-weight: 700;
-  color: var(--primary-color);
+  font-weight: 600;
+  color: var(--foreground);
+  margin-left: var(--spacing-sm);
 }
 
 .errorMessage {
-  color: var(--danger);
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
 }
 
 .payBtn {
   width: 100%;
-  background-color: var(--primary-color);
-  color: var(--white);
-  font-weight: 700;
-  padding: 0.75rem;
-  border-radius: var(--radius);
+  padding: 18px;
+  background-color: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
   border: none;
-  margin-top: 1.5rem;
   cursor: pointer;
-  transition: var(--transition);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  margin-top: var(--spacing-xl);
 }
 
 .payBtn:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--accent);
+  transform: translateY(-1px);
 }
 
 .payBtn:disabled {
-  background-color: #9ca3af;
+  background-color: var(--border);
+  color: var(--foreground-subtle);
   cursor: not-allowed;
+  transform: none;
 }

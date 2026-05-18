@@ -7,23 +7,26 @@ const FilterSidebar = ({ selectedCategory, onSelectCategory }) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-       try {
+      try {
         const res = await getCategories();
         setCategories(res.data);
-      } catch (error) { console.error(error); }
+      } catch (error) { 
+        console.error(error); 
+      }
     };
     fetchCategories();
   }, []);
 
   return (
-    <div className={styles.sidebar}>
-      <h3 className={styles.title}>Kategorije</h3>
-      <div className={styles.list}>
+    <nav className={styles.sidebar} aria-label="Product categories">
+      <h3 className={styles.title}>Categories</h3>
+      <div className={styles.list} role="list">
         <button
           onClick={() => onSelectCategory(null)}
           className={`${styles.button} ${selectedCategory === null ? styles.active : ''}`}
+          aria-pressed={selectedCategory === null}
         >
-          Svi proizvodi
+          All Pieces
         </button>
 
         {categories.map((cat) => (
@@ -31,12 +34,13 @@ const FilterSidebar = ({ selectedCategory, onSelectCategory }) => {
             key={cat.id}
             onClick={() => onSelectCategory(cat.id)}
             className={`${styles.button} ${selectedCategory === cat.id ? styles.active : ''}`}
+            aria-pressed={selectedCategory === cat.id}
           >
             {cat.name}
           </button>
         ))}
       </div>
-    </div>
+    </nav>
   );
 };
 
