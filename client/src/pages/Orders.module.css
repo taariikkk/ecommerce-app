@@ -1,175 +1,131 @@
-/* Premium Orders Page Styles */
 .container {
-  max-width: 900px;
+  max-width: 800px; /* Uži layout za bolju čitljivost */
   margin: 0 auto;
-  padding: 120px var(--spacing-lg) var(--spacing-3xl);
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-@media (min-width: 1024px) {
-  .container {
-    padding: 140px var(--spacing-xl) var(--spacing-3xl);
-  }
+  padding: var(--spacing-lg) var(--spacing-md);
 }
 
 .pageTitle {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 400;
-  color: var(--foreground);
-  letter-spacing: -0.02em;
-  margin-bottom: var(--spacing-3xl);
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--border);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 1rem;
 }
 
 .ordersList {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xl);
+  gap: 1.5rem;
 }
 
-/* Order Card */
+/* Kartica pojedinačne narudžbe */
 .orderCard {
-  background-color: var(--background-secondary);
-  border: 1px solid var(--border);
-  padding: var(--spacing-xl);
-  transition: border-color var(--transition-fast);
-  animation: fadeUp 0.5s ease-out forwards;
-  opacity: 0;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  transition: var(--transition);
 }
-
-.orderCard:nth-child(1) { animation-delay: 0.1s; }
-.orderCard:nth-child(2) { animation-delay: 0.2s; }
-.orderCard:nth-child(3) { animation-delay: 0.3s; }
 
 .orderCard:hover {
-  border-color: var(--foreground-subtle);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Order Header */
+/* Header narudžbe */
 .orderHeader {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: var(--spacing-lg);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--secondary-color);
+  margin-bottom: 1rem;
 }
 
 .orderInfo {
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  color: var(--foreground-muted);
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+  font-size: 0.9rem;
+  color: var(--text-light);
 }
 
 .orderId {
-  font-weight: 600;
-  color: var(--foreground);
-  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  color: var(--text-dark);
 }
 
 .orderSummary {
   text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--spacing-sm);
 }
 
 .totalPrice {
-  font-family: var(--font-sans);
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: var(--foreground);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 .statusBadge {
   display: inline-block;
-  padding: 6px 12px;
-  font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  padding: 4px 10px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  border-radius: 4px;
+  margin-top: 4px;
 }
 
 .statusPending {
-  background-color: rgba(245, 166, 35, 0.15);
-  color: var(--accent);
-  border: 1px solid rgba(245, 166, 35, 0.3);
+  background-color: #fef3c7;
+  color: #92400e; /* Žuta */
 }
 
 .statusPaid {
-  background-color: rgba(34, 197, 94, 0.15);
-  color: #22c55e;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background-color: #d1fae5;
+  color: #065f46; /* Zelena */
 }
 
-/* Items List */
+/* Lista stavki */
 .itemsList {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 0.75rem;
 }
 
 .itemRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: 0.95rem;
 }
 
 .itemName {
-  color: var(--foreground);
+  color: var(--text-dark);
 }
 
 .itemQuantity {
-  color: var(--foreground-subtle);
-  margin-left: var(--spacing-sm);
+  color: var(--text-light);
+  margin-left: 0.5rem;
 }
 
 .itemPrice {
-  font-weight: 500;
-  color: var(--foreground-muted);
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
 /* Empty State */
 .emptyState {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-3xl) var(--spacing-lg);
   text-align: center;
+  padding: 4rem 1rem;
 }
 
 .emptyTitle {
-  font-family: var(--font-serif);
   font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--foreground);
-  margin-bottom: var(--spacing-lg);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
 }
 
 .emptyLink {
-  padding: 16px 40px;
-  background-color: var(--foreground);
-  color: var(--background);
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
+  color: var(--primary-color);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
-}
-
-.emptyLink:hover {
-  background-color: var(--accent);
-  transform: translateY(-2px);
+  text-decoration: underline;
 }

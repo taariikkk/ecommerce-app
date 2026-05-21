@@ -15,7 +15,7 @@ const Orders = () => {
         const res = await getMyOrders();
         setOrders(res.data);
       } catch (error) {
-        console.error('Error fetching orders', error);
+        console.error('Greška pri dohvatanju narudžbi', error);
       } finally {
         setIsLoading(false);
       }
@@ -24,45 +24,36 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className={styles.container}>
-        <Loader />
-      </div>
-    );
-  }
+  if (isLoading) return <Loader />;
 
   if (orders.length === 0) {
     return (
       <div className={styles.emptyState}>
-        <h2 className={styles.emptyTitle}>No orders yet</h2>
-        <Link to="/" className={styles.emptyLink}>Start Shopping</Link>
+        <h2 className={styles.emptyTitle}>Nemate narudžbi</h2>
+        <Link to="/" className={styles.emptyLink}>Započnite kupovinu</Link>
       </div>
     );
   }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.pageTitle}>Order History</h1>
+      <h1 className={styles.pageTitle}>Moje Narudžbe</h1>
       
       <div className={styles.ordersList}>
         {orders.map((order) => (
-          <article key={order.id} className={styles.orderCard}>
+          <div key={order.id} className={styles.orderCard}>
             
             <div className={styles.orderHeader}>
               <div className={styles.orderInfo}>
-                <p>Order <span className={styles.orderId}>#{order.id}</span></p>
-                <p>{new Date(order.createdAt).toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}</p>
+                <p>Narudžba ID: <span className={styles.orderId}>#{order.id}</span></p>
+                <p>Datum: {new Date(order.createdAt).toLocaleDateString()}</p>
               </div>
               
               <div className={styles.orderSummary}>
                 <p className={styles.totalPrice}>{formatCurrency(order.totalPrice)}</p>
+                {/* Dinamička klasa za status */}
                 <span className={`${styles.statusBadge} ${order.status === 'paid' ? styles.statusPaid : styles.statusPending}`}>
-                  {order.status === 'paid' ? 'Confirmed' : 'Processing'}
+                  {order.status || 'Pending'}
                 </span>
               </div>
             </div>
@@ -72,10 +63,10 @@ const Orders = () => {
                 <div key={item.id} className={styles.itemRow}>
                   <div>
                     <span className={styles.itemName}>
-                      {item.Product ? item.Product.name : 'Product'}
+                      {item.Product ? item.Product.name : 'Proizvod'}
                     </span>
                     <span className={styles.itemQuantity}>
-                       × {item.quantity}
+                       x {item.quantity}
                     </span>
                   </div>
                   <span className={styles.itemPrice}>
@@ -85,7 +76,7 @@ const Orders = () => {
               ))}
             </div>
             
-          </article>
+          </div>
         ))}
       </div>
     </div>

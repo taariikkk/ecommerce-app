@@ -13,9 +13,9 @@ import Profile from './pages/Profile';
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <main>
+      <main className="container mx-auto p-4">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -24,6 +24,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/checkout" element={<Checkout />} />
+          {/* Admin Ruta */}
           <Route path="/admin" element={<AdminRoute> <Admin /> </AdminRoute>} /> 
           <Route path="/profile" element={<Profile />} />
         </Routes>

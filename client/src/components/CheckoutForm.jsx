@@ -19,10 +19,10 @@ const CheckoutForm = ({ totalAmount, onSuccess }) => {
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
-        case "succeeded": setMessage("Payment successful!"); break;
-        case "processing": setMessage("Payment is processing."); break;
-        case "requires_payment_method": setMessage("Payment failed. Please try again."); break;
-        default: setMessage("Something went wrong."); break;
+        case "succeeded": setMessage("Uplata uspješna!"); break;
+        case "processing": setMessage("Uplata se obrađuje."); break;
+        case "requires_payment_method": setMessage("Uplata nije uspjela."); break;
+        default: setMessage("Nešto je pošlo po zlu."); break;
       }
     });
   }, [stripe]);
@@ -46,29 +46,28 @@ const CheckoutForm = ({ totalAmount, onSuccess }) => {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       onSuccess(paymentIntent); 
     } else {
-      setMessage("Unexpected payment state.");
+      setMessage("Neočekivano stanje.");
       setIsLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <h2 className={styles.heading}>Payment Details</h2>
+      <h2 className={styles.heading}>Plaćanje</h2>
       <p className={styles.totalText}>
-        Order Total: <span className={styles.amount}>{formatCurrency(totalAmount)}</span>
+        Ukupno za platiti: <span className={styles.amount}>{formatCurrency(totalAmount)}</span>
       </p>
       
       <PaymentElement id="payment-element" />
       
-      {message && <div className={styles.errorMessage} role="alert">{message}</div>}
+      {message && <div className={styles.errorMessage}>{message}</div>}
 
       <button 
         disabled={isLoading || !stripe || !elements} 
         id="submit"
         className={styles.payBtn}
-        type="submit"
       >
-        {isLoading ? "Processing..." : "Complete Purchase"}
+        {isLoading ? "Obrađujem..." : "Plati sada"}
       </button>
     </form>
   );
