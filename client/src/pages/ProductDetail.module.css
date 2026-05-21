@@ -1,230 +1,155 @@
-/* Premium Product Detail Styles */
 .container {
-  min-height: 100vh;
-  padding-top: 100px;
-  animation: fadeIn 0.6s ease-out forwards;
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-lg) var(--spacing-md);
 }
 
 .wrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-@media (min-width: 1024px) {
-  .wrapper {
-    grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 100px);
-  }
-}
-
-/* Image Section */
-.imageContainer {
-  position: relative;
-  background-color: var(--background-secondary);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   overflow: hidden;
-  aspect-ratio: 3/4;
+  width: 100%;
+  max-width: 1000px;
 }
 
-@media (min-width: 1024px) {
-  .imageContainer {
-    aspect-ratio: auto;
-    position: sticky;
-    top: 80px;
-    height: calc(100vh - 80px);
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+    height: 500px; /* Fiksna visina na desktopu */
   }
+}
+
+/* Lijeva strana - Slika */
+.imageContainer {
+  flex: 1;
+  background-color: #f3f4f6;
+  position: relative;
+  overflow: hidden;
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  transition: transform 0.3s ease;
 }
 
-.imageContainer:hover .image {
-  transform: scale(1.03);
+.image:hover {
+  transform: scale(1.05); /* Zoom efekat na hover */
 }
 
-/* Details Section */
+/* Desna strana - Detalji */
 .detailsContainer {
+  flex: 1;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--spacing-2xl) var(--spacing-lg);
-}
-
-@media (min-width: 768px) {
-  .detailsContainer {
-    padding: var(--spacing-3xl);
-  }
-}
-
-@media (min-width: 1024px) {
-  .detailsContainer {
-    padding: var(--spacing-3xl) 80px;
-  }
 }
 
 .categoryTag {
   display: inline-block;
-  font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  background-color: var(--secondary-color);
+  color: var(--text-light);
+  font-size: 0.85rem;
   font-weight: 600;
-  color: var(--accent);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: var(--spacing-sm);
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: var(--spacing-lg);
-  animation: fadeUp 0.6s ease-out forwards;
-  animation-delay: 0.1s;
-  opacity: 0;
+  letter-spacing: 0.5px;
 }
 
 .title {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 400;
-  color: var(--foreground);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: var(--spacing-lg);
-  animation: fadeUp 0.6s ease-out forwards;
-  animation-delay: 0.2s;
-  opacity: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .price {
-  font-family: var(--font-sans);
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--foreground-muted);
-  letter-spacing: 0.05em;
-  margin-bottom: var(--spacing-2xl);
-  animation: fadeUp 0.6s ease-out forwards;
-  animation-delay: 0.3s;
-  opacity: 0;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
 }
 
 .description {
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  color: var(--foreground-muted);
-  line-height: 1.8;
-  margin-bottom: var(--spacing-2xl);
-  max-width: 480px;
-  animation: fadeUp 0.6s ease-out forwards;
-  animation-delay: 0.4s;
-  opacity: 0;
+  color: var(--text-light);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
 }
 
 .stockStatus {
-  margin-bottom: var(--spacing-2xl);
-  animation: fadeUp 0.6s ease-out forwards;
-  animation-delay: 0.5s;
-  opacity: 0;
-}
-
-.inStock,
-.outOfStock {
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
 }
 
 .inStock {
-  color: #22c55e;
-}
-
-.inStock::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background-color: #22c55e;
-  border-radius: 50%;
+  color: var(--success);
 }
 
 .outOfStock {
-  color: var(--foreground-subtle);
-}
-
-.outOfStock::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background-color: var(--foreground-subtle);
-  border-radius: 50%;
+  color: var(--danger);
 }
 
 .addToCartBtn {
   width: 100%;
-  max-width: 400px;
-  padding: 18px 40px;
-  background-color: var(--foreground);
-  color: var(--background);
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 14px;
+  font-size: 1.1rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
   border: none;
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
-  animation: fadeUp 0.6s ease-out forwards;
-  animation-delay: 0.6s;
-  opacity: 0;
+  transition: var(--transition);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
 }
 
 .addToCartBtn:hover {
-  background-color: var(--accent);
+  background-color: var(--primary-hover);
   transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
 }
 
 .addToCartBtn:disabled {
-  background-color: var(--border);
-  color: var(--foreground-subtle);
+  background-color: #9ca3af;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
-/* Error State */
+/* Error Stanje */
 .errorContainer {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-3xl) var(--spacing-lg);
   text-align: center;
+  padding: 4rem 1rem;
 }
 
 .errorMessage {
-  font-family: var(--font-serif);
   font-size: 1.25rem;
-  color: var(--foreground-muted);
-  margin-bottom: var(--spacing-xl);
-  font-style: italic;
+  color: var(--danger);
+  margin-bottom: 1rem;
 }
 
 .backButton {
-  padding: 14px 32px;
-  background-color: transparent;
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border: 1px solid var(--border);
-  transition: all var(--transition-fast);
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: var(--transition);
 }
 
 .backButton:hover {
-  background-color: var(--foreground);
-  color: var(--background);
-  border-color: var(--foreground);
+  background-color: var(--primary-hover);
 }

@@ -24,64 +24,53 @@ const Register = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.card}>
-        <h2 className={styles.title}>Join Atelier</h2>
-        <p className={styles.subtitle}>Create an account to access exclusive pieces</p>
+        <h2 className={styles.title}>Kreiraj nalog</h2>
         
-        <div className={styles.nameRow}>
-          <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="firstName">First Name</label>
-            <input 
-              id="firstName"
-              type="text" 
-              name="firstName" 
-              onChange={handleChange} 
-              className={styles.input} 
-              required 
-              placeholder="First name"
-              autoComplete="given-name"
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label className={styles.label} htmlFor="lastName">Last Name</label>
-            <input 
-              id="lastName"
-              type="text" 
-              name="lastName" 
-              onChange={handleChange} 
-              className={styles.input} 
-              required 
-              placeholder="Last name"
-              autoComplete="family-name"
-            />
-          </div>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Ime</label>
+          <input 
+            type="text" 
+            name="firstName" 
+            onChange={handleChange} 
+            className={styles.input} 
+            required 
+            placeholder="npr. Marko"
+          />
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="email">Email</label>
+          <label className={styles.label}>Prezime</label>
           <input 
-            id="email"
+            type="text" 
+            name="lastName" 
+            onChange={handleChange} 
+            className={styles.input} 
+            required 
+            placeholder="npr. Marković"
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Email</label>
+          <input 
             type="email" 
             name="email" 
             onChange={handleChange} 
             className={styles.input} 
             required 
-            placeholder="your@email.com"
-            autoComplete="email"
+            placeholder="vasa@adresa.com"
           />
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor="password">Password</label>
+          <label className={styles.label}>Lozinka</label>
           <input 
-            id="password"
             type="password" 
             name="password" 
             onChange={handleChange} 
             className={styles.input} 
             required 
-            placeholder="Minimum 6 characters"
-            autoComplete="new-password"
+            placeholder="Najmanje 6 karaktera"
           />
         </div>
 
@@ -90,12 +79,12 @@ const Register = () => {
           disabled={isLoading} 
           className={styles.button}
         >
-          {isLoading ? 'Creating account...' : 'Create Account'}
+          {isLoading ? 'Registracija...' : 'Registruj se'}
         </button>
         
         <p className={styles.footer}>
-          Already have an account?
-          <Link to="/login" className={styles.link}>Sign in</Link>
+          Već imate nalog? 
+          <Link to="/login" className={styles.link}>Prijavite se</Link>
         </p>
       </form>
     </div>
